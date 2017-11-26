@@ -11,16 +11,13 @@ import it.unimi.dsi.webgraph.ImmutableGraph;
 
 public class IM_flat {
 	ImmutableGraph G;
-	int n;
-	long m;
-	double eps = .1;
-    double p; // given probability of arc existence
-    int k = 5; // given number of maximum influence nodes
+    int n, k;
+    long m;
+    String basename;
+    double p, beta;
     int nMAX = 1400000000; // maximum possible for 16 GB main memory
     
     BitSet marked, sk_gone, nodes_gone;
-    
-    double beta = 2; // beta parameter
     
     // Flat arrays to keep: sketches - all sketch numbers in order, like 0000...1111...2222...;
     //                      nodes - all corresponding node IDs participating in sketch, like 13 17 100 230 ... 13 23 300 10000 ...
@@ -31,7 +28,7 @@ public class IM_flat {
 
     int count_sketches; // the length of sketches and nodes arrays
 	
-	public IM_flat(String basename, Double  p) throws Exception {
+	public IM_flat(String basename, Double  p, Double beta, int k) throws Exception {
 		G = ImmutableGraph.load(basename);
 		
 		n = G.numNodes();
@@ -54,7 +51,10 @@ public class IM_flat {
             nodes[i] = -1;
         }
         
+        this.basename = basename;
         this.p = p;
+        this.beta = beta;
+        this.k = k;
 	}
     
 	
@@ -243,16 +243,24 @@ public class IM_flat {
 		long startTime = System.currentTimeMillis();
 		long estimatedTime;
 
+        if(args.length < 4) {
+            System.out.println("Specify: basename, p, beta, k");
+            System.exit(1);
+        }
+        
+        String basename  = args[0];
+        double p = Double.valueOf(args[1]);
+        double beta = Double.valueOf(args[2]);
+        int k = Integer.valueOf(args[3]);
+
 		//args = new String[] {"cnr-nlt", "0.1"};
-        args = new String[] {"uk100-nlt", "0.1"};
+        //args = new String[] {"uk100-nlt", "0.1"};
         //args = new String[] {"eu-nlt", "0.1"};
 
-
+		//String basename  = args[0];
+		//double p = Double.valueOf(args[1]);
 		
-		String basename  = args[0];
-		double p = Double.valueOf(args[1]);
-		
-        IM_flat imfl = new IM_flat(basename, p);
+        IM_flat imfl = new IM_flat(basename, p, beta, k);
 		imfl.get_sketch();
 			
 		estimatedTime = System.currentTimeMillis() - startTime;
