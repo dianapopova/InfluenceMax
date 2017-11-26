@@ -10,17 +10,14 @@ import java.util.Arrays;
 import it.unimi.dsi.webgraph.ImmutableGraph;
 
 public class IM_flat_compr {
-	ImmutableGraph G;
-	int n;
-	long m;
-	double eps = .1;
-    double p; // given probability of arc existence
-    int k = 5; // given number of seeds
+    ImmutableGraph G;
+    int n, k;
+    long m;
+    String basename;
+    double p, beta;
     int nMAX = 2147483645;
     
     BitSet marked, sk_gone, nodes_gone;
-    
-    double beta = 2; // beta parameter
     
     // Flat arrays to keep: sketches - number of nodes participating in each sketch, accumulating, like 4 ||  7 || 11 || ...; index of the element is the sketch ID;
     //                      nodes - all corresponding node IDs participating in a sketch, like 13 17 100 230 || 1 23 300 || 13 23 300 10000 || ...
@@ -31,7 +28,7 @@ public class IM_flat_compr {
 
     int count_sketches; // the length of nodes array
 	
-	public IM_flat_compr(String basename, Double  p) throws Exception {
+	public IM_flat_compr(String basename, Double  p, Double beta, int k) throws Exception {
 		G = ImmutableGraph.load(basename);
 		
 		n = G.numNodes();
@@ -58,7 +55,10 @@ public class IM_flat_compr {
             sketches[i] = -1;
         }
         
+        this.basename = basename;
         this.p = p;
+        this.beta = beta;
+        this.k = k;
 	}
     
 	
@@ -269,17 +269,25 @@ public class IM_flat_compr {
 	public static void main(String[] args) throws Exception {
 		long startTime = System.currentTimeMillis();
 		long estimatedTime;
+        
+        if(args.length < 4) {
+            System.out.println("Specify: basename, p, beta, k");
+            System.exit(1);
+        }
+        
+        String basename  = args[0];
+        double p = Double.valueOf(args[1]);
+        double beta = Double.valueOf(args[2]);
+        int k = Integer.valueOf(args[3]);
 
 		//args = new String[] {"cnr-nlt", "0.1"};
-        args = new String[] {"uk100-nlt", "0.1"};
+        //args = new String[] {"uk100-nlt", "0.1"};
         //args = new String[] {"eu-nlt", "0.1"};
-
-
 		
-		String basename  = args[0];
-		double p = Double.valueOf(args[1]);
+		//String basename  = args[0];
+		//double p = Double.valueOf(args[1]);
 		
-        IM_flat_compr imfl = new IM_flat_compr(basename, p);
+        IM_flat_compr imfl = new IM_flat_compr(basename, p, beta, k);
 		imfl.get_sketch();
 			
 		estimatedTime = System.currentTimeMillis() - startTime;
