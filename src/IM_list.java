@@ -18,17 +18,15 @@ import java.io.IOException;
 
 public class IM_list {
 	ImmutableGraph G;
-	int n;
+	int n, k;
     long m;
-	final static double eps = .1;
-    double p; // given probability of arc existence
-    int k = 5; // given number of maximum influence nodes
+    String basename;
+    double p, beta; // given probability of arc existence
     
     BitSet marked, sk_gone;
 
-    double beta = 2;
 	
-	public IM_list(String basename, Double  p) throws Exception {
+	public IM_list(String basename, Double  p, Double beta, int k) throws Exception {
 		G = ImmutableGraph.load(basename);
 		
 		n = G.numNodes();
@@ -40,7 +38,10 @@ public class IM_list {
       
         marked = new BitSet(n);
         
+        this.basename = basename;
         this.p = p;
+        this.beta = beta;
+        this.k = k;
 
 	}
     
@@ -120,7 +121,7 @@ public class IM_list {
 /*
          // Getting the spread for the given set of seeds:
          
-         int[] seeds = {89508, 228845, 109878, 262755, 233729}; //for cnr2000
+         int[] seeds = {110604, 87976, 229573, 233431, 262756}; //for cnr2000
          infl_est(I, node_degrees, seeds, coeff);
 */
 
@@ -323,17 +324,27 @@ public class IM_list {
 	public static void main(String[] args) throws Exception {
 		long startTime = System.currentTimeMillis();
 		long estimatedTime;
+        
+        if(args.length < 4) {
+            System.out.println("Specify: basename, p, beta, k");
+            System.exit(1);
+        }
+        
+        String basename  = args[0];
+        double p = Double.valueOf(args[1]);
+        double beta = Double.valueOf(args[2]);
+        int k = Integer.valueOf(args[3]);
+        
 
         //args = new String[] {"cnr-nlt", "0.1"};
-        args = new String[] {"uk100-nlt", "0.1"};
+        //args = new String[] {"uk100-nlt", "0.1"};
         //args = new String[] {"eu-nlt", "0.1"};
 
-
 		
-		String basename  = args[0];
-		double p = Double.valueOf(args[1]);
+		//String basename  = args[0];
+		//double p = Double.valueOf(args[1]);
 		
-		IM_list iml = new IM_list(basename, p);
+		IM_list iml = new IM_list(basename, p, beta, k);
 		iml.get_sketch();
 			
 		estimatedTime = System.currentTimeMillis() - startTime;
