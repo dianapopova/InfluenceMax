@@ -20,14 +20,22 @@ Data structure used in this implementation is one-dimensional array (flat array)
 # IM_flat_compr
 Data structures used in this implementation are one-dimensional array (flat array) and custom-compressed flat array.
 # Getting Started
-Download and install Webgraph framework from http://webgraph.di.unimi.it.
+a. Download and install Webgraph framework from http://webgraph.di.unimi.it.
 
-Download a dataset from http://law.di.unimi.it/datasets.php. Our programs use transpose (inverse) graphs, 
-which have "-t" after the name. For example, cnr-2000-t.graph. 
+b. Get dataset: download a dataset from http://law.di.unimi.it/datasets.php. Our programs use transpose (inverse) graphs, 
+which have "-t" after the name. For example, cnr-2000-t.graph. These datasets are already in Webgraph format.
 
-The graph should not have self-loops. To eliminate the self-loops, download our custom program SelfLoopRemover.
+Or, if you would like to use another graph, convert a list of edges (must be sorted) into the Webgraph format. For example:
 
-Download IM_list.java, IM_flat.java, and/or IM_flat_compr.java from this project, to test different data structures.
+java -cp "../lib/*":"../bin" it.unimi.dsi.webgraph.BVGraph -1 -g ArcListASCIIGraph dummy cnr2000 < cnr2000-sortedEdges.txt
+
+c. The dataset will be presented by two files, with the extensions .graph and .properties. You need another file, .offset. To get it:
+
+java -cp "../lib/*":"../bin" it.unimi.dsi.webgraph.BVGraph -o -O -L cnr2000
+
+d. The graph should not have self-loops. To eliminate the self-loops, download and run our custom program SelfLoopRemover.
+
+e. Download IM_list.java, IM_flat.java, and/or IM_flat_compr.java from this project, to test different data structures.
 # Running the tests
 Compile the programs using Webgraph library, for example:
 
