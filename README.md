@@ -19,6 +19,10 @@ Data structure used in this implementation is list of lists (two-dimensional lis
 Data structure used in this implementation is one-dimensional array (flat array).
 # IM_flat_compr
 Data structures used in this implementation are one-dimensional array (flat array) and custom-compressed flat array.
+# IM_flat_parallel
+Data structure is the same as in IM_flat, but the hypergraph is built in parallel, independently, by all available cores on the machine, and then combined into one flat array by concatenating the results of each core.
+# Borgs
+Data structure for the hypergraph in this implementation is Webgraph (compressed adjacency lists). The hypergraph is built in parallel, independently, by all available cores on the machine, and then combined into one file stored on disk.
 # Getting Started
 a. Download and install Webgraph framework from http://webgraph.di.unimi.it.
 
