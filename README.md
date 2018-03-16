@@ -26,7 +26,7 @@ Data structure for the hypergraph in this implementation is Webgraph (compressed
 
 2. Diana Popova, Naoto Ohsaka, Ken-ichi Kawarabayashi, Alex Thomo: NoSingles: a Space-Efficient Algorithm for Influence Maximization. Submitted to SSDBM 2018.
 
-The second paper describes NoSingles algorithm, a space-efficient algorithm for computing Influence Maximization.
+The second paper describes NoSingles, a space-efficient algorithm for computing Influence Maximization.
 
 # NoSingles
 Data structure used for saving the intermediate results of computation is Webgraph.
@@ -74,11 +74,11 @@ IM_flat is the program to run; cnr-2000-t is the basename for the graph; 0.1 is 
 
 Or, 
 
-...
+```
 
 java -Xmx16g -Xss16g -cp "../lib/*":"../bin" NoSingles uk100K-t 0.001 0.1 10
 
-...
+```
 
 NoSingles is the program to run; uk100K-t is the basename for the graph; 0.001 is p, the probability of edge existence; 0.1 is the value of epsilon (allowed error); and 10 is k, the number of seeds to compute.
 
