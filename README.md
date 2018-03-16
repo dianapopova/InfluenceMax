@@ -1,16 +1,16 @@
 # InfluenceMax
-This repository contains efficient implementations for computing the influence maximization on large graphs using distinct data structures. The details of the implementations are described in the following paper:
+This repository contains efficient implementations for computing the influence maximization on large graphs using distinct data structures. The details of the implementations are described in the following papers:
 
-Diana Popova, Akshay Khot, Alex Thomo: Data Structures for Efficient Computation of Influence Maximization and Influence Estimation. Accepted by EDBT/ICDT 2018 Joint Conference (Vienna, March 26-29, 2018).
+1. Diana Popova, Akshay Khot, Alex Thomo: Data Structures for Efficient Computation of Influence Maximization and Influence Estimation. Accepted by EDBT/ICDT 2018 Joint Conference (Vienna, March 26-29, 2018).
 
-There are three implementations of the algorithm in:
+The first paper describes three implementations of the Borgs et al. method
 
-C. Borgs, M. Brautbar, J. Chayes, and B. Lucier. Maximizing social influence
-in nearly optimal time. In SODA, pages 946–957, 2014.
+(C. Borgs, M. Brautbar, J. Chayes, and B. Lucier. Maximizing social influence
+in nearly optimal time. In SODA, pages 946–957, 2014.)
 
-using the WebGraph compression in:
+using the WebGraph compression
 
-P. Boldi and S. Vigna. The webgraph framework I: compression techniques. WWW'04. 
+(P. Boldi and S. Vigna. The webgraph framework I: compression techniques. WWW'04.) 
 
 All implementations are coded in Java 8.
 # IM_list
@@ -23,6 +23,17 @@ Data structures used in this implementation are one-dimensional array (flat arra
 Data structure is the same as in IM_flat, but the hypergraph is built in parallel, independently, by all available cores on the machine, and then combined into one flat array by concatenating the results of each core.
 # Borgs
 Data structure for the hypergraph in this implementation is Webgraph (compressed adjacency lists). The hypergraph is built in parallel, independently, by all available cores on the machine, and then combined into one file stored on disk.
+
+2. Diana Popova, Naoto Ohsaka, Ken-ichi Kawarabayashi, Alex Thomo: NoSingles: a Space-Efficient Algorithm for Influence Maximization. Submitted to SSDBM 2018.
+
+The second paper describes NoSingles algorithm, a space-efficient algorithm for computing Influence Maximization.
+
+# NoSingles
+Data structure used for saving the intermediate results of computation is Webgraph.
+
+# NoSinglesTopNodes
+Data structures used for saving intermediate results of computation are Webgraph and HashMap.
+
 # Getting Started
 a. Download and install Webgraph framework from http://webgraph.di.unimi.it.
 
@@ -39,7 +50,8 @@ java -cp "../lib/*":"../bin" it.unimi.dsi.webgraph.BVGraph -o -O -L cnr2000
 
 d. The graph should not have self-loops. To eliminate the self-loops, download and run our custom program SelfLoopRemover.
 
-e. Download IM_list.java, IM_flat.java, and/or IM_flat_compr.java from this project, to test different data structures.
+e. Download IM_list.java, IM_flat.java, IM_flat_compr.java, NoSingles, and/or NoSinglesTopNodes, to test different data structures.
+
 # Running the tests
 Compile the programs using Webgraph library, for example:
 
@@ -59,5 +71,17 @@ java -Xmx16g -cp "../lib/*":"../bin" IM_flat cnr-2000-t 0.1 32 10
 
 IM_flat is the program to run; cnr-2000-t is the basename for the graph; 0.1 is p, the probability of edge existence;
 32 is the value of beta (coefficient for calculating the weight of hypergraph); and 10 is k, the number of seeds.
+
+Or, 
+
+...
+
+java -Xmx16g -Xss16g -cp "../lib/*":"../bin" NoSingles uk100K-t 0.001 0.1 10
+
+...
+
+NoSingles is the program to run; uk100K-t is the basename for the graph; 0.001 is p, the probability of edge existence; 0.1 is the value of epsilon (allowed error); and 10 is k, the number of seeds to compute.
+
+
 # Contacts
 If you have a question, please, send e-mail to dpopova@uvic.ca or thomo@uvic.ca
