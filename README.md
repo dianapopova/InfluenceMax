@@ -1,9 +1,10 @@
 # InfluenceMax
 This repository contains efficient implementations for computing the influence maximization on large graphs using distinct data structures. The details of the implementations are described in the following papers:
 
-1. Diana Popova, Akshay Khot, Alex Thomo: Data Structures for Efficient Computation of Influence Maximization and Influence Estimation. Accepted by EDBT/ICDT 2018 Joint Conference (Vienna, March 26-29, 2018).
+----------------------------------------------------------------------------------------------------------------------------------------
+1. Diana Popova, Akshay Khot, Alex Thomo: Data Structures for Efficient Computation of Influence Maximization and Influence Estimation. Published in EDBT 2018 Proceedings.
 
-The first paper describes three implementations of the Borgs et al. method
+This  paper describes three implementations of the Borgs et al. method
 
 (C. Borgs, M. Brautbar, J. Chayes, and B. Lucier. Maximizing social influence
 in nearly optimal time. In SODA, pages 946–957, 2014.)
@@ -24,16 +25,29 @@ Data structure is the same as in IM_flat, but the hypergraph is built in paralle
 # Borgs
 Data structure for the hypergraph in this implementation is Webgraph (compressed adjacency lists). The hypergraph is built in parallel, independently, by all available cores on the machine, and then combined into one file stored on disk.
 
-2. Diana Popova, Naoto Ohsaka, Ken-ichi Kawarabayashi, Alex Thomo: NoSingles: a Space-Efficient Algorithm for Influence Maximization. Submitted to SSDBM 2018.
+---------------------------------------------------------------------------------------------------------------------------------------
+2. Diana Popova, Naoto Ohsaka, Ken-ichi Kawarabayashi, Alex Thomo: NoSingles: a Space-Efficient Algorithm for Influence Maximization. Published in SSDBM 2018 Proceedings.
 
-The second paper describes NoSingles, a space-efficient algorithm for computing Influence Maximization.
+This paper describes NoSingles, a space-efficient algorithm for computing Influence Maximization.
 
 # NoSingles
-Data structure used for saving the intermediate results of computation is Webgraph.
+Data structure used for saving the intermediate results of computation are Webgraph and flat array.
 
 # NoSinglesTopNodes
 Data structures used for saving intermediate results of computation are Webgraph and HashMap.
 
+---------------------------------------------------------------------------------------------------------------------------------------
+3. Diana Popova, Ken-ichi Kawarabayashi, Alex Thomo: CutTheTail: an Accurate and Space-Efficient Heuristic Algorithm for Influence Maximization. Submitted to EDBT 2019.
+
+This paper describes CutTheTail, a space-efficient algorithm for computing Influence Maximization. It uses Pareto principle.
+
+# CutTheTail
+Data structures used for saving the intermediate results of computation are Webgraph and flat array.
+
+# CutTheTail2
+Data structures used for saving intermediate results of computation are Webgraph and flat array.
+
+----------------------------------------------------------------------------------------------------------------------------------------
 # Getting Started
 a. Download and install Webgraph framework from http://webgraph.di.unimi.it.
 
@@ -50,8 +64,9 @@ java -cp "../lib/*":"../bin" it.unimi.dsi.webgraph.BVGraph -o -O -L cnr2000
 
 d. The graph should not have self-loops. To eliminate the self-loops, download and run our custom program SelfLoopRemover.
 
-e. Download IM_list.java, IM_flat.java, IM_flat_compr.java, NoSingles, and/or NoSinglesTopNodes, to test different data structures.
+e. Download a program from this site, to test a data structure.
 
+---------------------------------------------------------------------------------------------------------------------------------------
 # Running the tests
 Compile the programs using Webgraph library, for example:
 
